@@ -1,0 +1,13 @@
+.CookieClicker_Main{
+    width: 100%;
+    height: 50vh;
+}
+
+.CookieClicker_Main_Cookie{
+    display: block;
+    margin: 0px auto;
+}
+
+.CookieClicker_p {
+    margin: 2px;
+}

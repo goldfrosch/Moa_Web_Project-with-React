@@ -1,0 +1,33 @@
+
+// const content = [
+//     {
+//         tab: "Test1",
+//         content: "예시예시문장1"
+//     },
+//     {
+//         tab: "Test2",
+//         content: "예시예시문장2"
+//     },
+// ]
+// const useTabs = (init,all) => {
+//     const [cIndex,setIndex] = useState(init);
+//     //값 없을때
+//     if(!all || !Array.isArray(all)){
+//         return;
+//     }
+//     else {
+//         return {
+//             currentItem: all[cIndex],
+//             changeItem: setIndex
+//         }
+//     }
+    
+// }
+//const { currentItem , changeItem } = useTabs(0, content);
+{/* <div>
+                {content.map((c,key) => (
+                    <button onClick={() => changeItem(key)} key={key}>{c.tab}</button>
+                ))}
+                <br />
+                {currentItem.content}
+            </div> */}

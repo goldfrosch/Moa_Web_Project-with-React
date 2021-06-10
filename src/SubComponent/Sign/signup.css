@@ -1,0 +1,14 @@
+.outer{width:100%;height:200vh}
+.signin{width:30vh;height:50vh;background:#dbdddf}
+
+.caution {
+  font-size: calc(2px + 0.2vmin);
+  color: #db3f3d;
+}
+/* 가운데 정렬 */
+.signin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
