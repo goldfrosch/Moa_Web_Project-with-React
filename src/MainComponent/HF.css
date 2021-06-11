@@ -1,10 +1,4 @@
 /* Site Main style*/
-.App {
-  margin: 0;
-  height: 100%;  
-  color: #141414;
-  background-size: cover;
-}
 .App-logo {
   width: 6vmin;
   height: 6vmin;
@@ -70,11 +64,18 @@
   float: left;
   padding-right: 10px;
 }
+.App-header-signout {
+  color: #474747;
+}
 
+.App-header-signout:hover {
+  color:#787878;
+}
 a {
   color: #474747;
   text-decoration: none;
 }
+
 a:hover {
   color:#787878;
 }

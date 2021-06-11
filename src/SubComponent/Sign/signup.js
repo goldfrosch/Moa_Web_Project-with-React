@@ -13,6 +13,7 @@ export default class Signup extends Component {
       status_pw: "",
       status_uuid: "",
       status_nn: "",
+      islogin: false,
     };
   }
 
@@ -35,7 +36,7 @@ export default class Signup extends Component {
       })
     }
     else{
-      fetch('api/registercheck_id?id=' + id)
+      fetch('/api/registercheck_id?id=' + id)
         .then(res => res.json())
         .then(data => this.setState({
             status_id: data.status_id,
@@ -88,25 +89,44 @@ export default class Signup extends Component {
     }
   }
 
+  componentDidMount() {
+    if(sessionStorage.getItem('user_id') !== null){
+      this.setState({
+        islogin: true,
+      })
+    }
+  }
   render() {
-    const {status ,status_id, status_pw,status_uuid,status_nn} = this.state;
-    return (
-      <div className="outer">
-        <div className="signin">
-          <h3>해라 너 회원가입</h3>
-          아이디<br /> <input name={'id'} placeholder="아이디" onChange={this.handleChange} /><button onClick={this.btncheckid}>중복확인</button><br />
-          <p className="caution">{status_id}</p>
-          비밀번호<br /> <input type="password" placeholder="비밀번호" name={'password'} onChange={this.handleChange} /><br />
-          <p className="caution">{status_pw}</p>
-          마인크래프트 UUID<br /> <input name={'uuid'} placeholder="UUID"onChange={this.handleChange} /><br />
-          <p className="caution">{status_uuid}</p>
-          사용할 닉네임<br /> <input name={'nickname'} placeholder="닉네임" onChange={this.handleChange} /><br />
-          <p className="caution">{status_nn}</p>
-          <button onClick={this.btnregister}>전송</button>
-          <h5>{status}</h5>
+    const {status ,status_id, status_pw,status_uuid,status_nn,islogin} = this.state;
+    if(islogin){
+      return(
+        <div className="outer">
+          <div className="signin">
+            넌 이미 로그인
+          </div>
         </div>
-      </div>
-    );
+      );
+      
+    }
+    else{
+      return (
+        <div className="outer">
+          <div className="signin">
+            <h3>해라 너 회원가입</h3>
+            아이디<br /> <input name={'id'} placeholder="아이디" onChange={this.handleChange} /><button onClick={this.btncheckid}>중복확인</button><br />
+            <p className="caution">{status_id}</p>
+            비밀번호<br /> <input type="password" placeholder="비밀번호" name={'password'} onChange={this.handleChange} /><br />
+            <p className="caution">{status_pw}</p>
+            마인크래프트 UUID<br /> <input name={'uuid'} placeholder="UUID"onChange={this.handleChange} /><br />
+            <p className="caution">{status_uuid}</p>
+            사용할 닉네임<br /> <input name={'nickname'} placeholder="닉네임" onChange={this.handleChange} /><br />
+            <p className="caution">{status_nn}</p>
+            <button onClick={this.btnregister}>전송</button>
+            <h5>{status}</h5>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

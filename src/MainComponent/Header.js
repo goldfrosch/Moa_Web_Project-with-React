@@ -54,6 +54,13 @@ class Hovermenu extends Component{
 }
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      islogin: false,
+    };
+  }
+
   render(){
     return (
       <header className="App-header">
@@ -65,20 +72,72 @@ class Header extends Component {
         <div className="App-header_list">
           <Hovermenu />
         </div>
-        <div className="App-header-sign">
-          <div className="App-header-signup">
-            <Link to={'/signup'}>
-              Signup
-            </Link>
-          </div>
-          <div className="App-header-signin">
-            <Link to={'/signin'}>
-              Signin
-            </Link>
-          </div>
-        </div>
+        {sessionStorage.getItem('user_id') !== null ? <LogoutForm /> : <LoginForm />}
       </header>
     );
+  }
+}
+
+class LoginForm extends Component {
+  render(){
+    return(
+      <div className="App-header-sign">
+        <div className="App-header-signup">
+          <Link to={'/signup'}>
+            Sign Up
+          </Link>
+        </div>
+        <div className="App-header-signin">
+          <Link to={'/signin'}>
+            Sign In
+          </Link>
+        </div>
+      </div>
+    )
+  }
+}
+
+class LogoutForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      islogin: false,
+      userinfo: '',
+    };
+  }
+
+  logout = () => {
+    sessionStorage.removeItem('user_id');
+    document.location.href = '/';
+  }
+
+  // componentDidMount() {
+  //   this.callApi()
+  //   .then(res => this.setState({userinfo: res}))
+  //   .catch(err => console.log(err));
+  // }
+
+  // callApi = async () => {
+  //   const id = sessionStorage.getItem('user_id');
+  //   const response = await fetch('/api/userinfo?id=' + id);
+  //   const body = await response.json();
+  //   return body;
+  // }
+
+  render(){
+    console.log(this.state.userinfo);
+    //var image_link = "https://mc-heads.net/avatar/";
+    return(
+      <div className="App-header-sign">
+        <p>님 환영합니다</p>
+        <div className="App-header-signup">
+            <p className="App-header-signout">Info</p>
+        </div>
+        <div className="App-header-signin">
+            <p onClick={this.logout} className="App-header-signout">Sign Out</p>
+        </div>
+      </div>
+    )
   }
 }
 

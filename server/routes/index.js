@@ -10,6 +10,16 @@ router.get('/group', (req, res)=> {
     res.json({username:'dev group. bryan'})
 });
 
+router.get('/userinfo', (req, res) => {
+    const id = req.query.id;
+    let sql = `select * from playerdb where id = ('${id}')`;
+    db.query(sql,
+      (err, rows, fields) => {
+        res.send(rows);
+      } 
+    )
+});
+
 router.get('/notice_list', (req, res) => {
     db.query(
       'SELECT id,title,uuid,nickname,views,if(DATE(writetime) >= DATE(now()),DATE_FORMAT(writetime, "%H:%i"),DATE_FORMAT(writetime, "%y.%m.%d")) as writetime from noticedb order by id desc',
@@ -24,7 +34,7 @@ router.get('/login', function (req, res) {
     const pw = req.query.password;
     let sql = `select id,password from playerdb where id = ('${id}')`;
   
-    connection.query(sql, function (err, rows) {
+    db.query(sql, function (err, rows) {
         if(err){
             console.log("문제발생");
         }
@@ -70,7 +80,7 @@ router.get('/register', function (req, res) {
     });
 });
 
-router.get('/api/registercheck_id', function (req, res) {
+router.get('/registercheck_id', function (req, res) {
     const id = req.query.id;
     let sql = `select id from playerdb where id = ('${id}')`;
   

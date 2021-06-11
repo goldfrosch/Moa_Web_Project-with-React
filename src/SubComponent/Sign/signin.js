@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { loginUser } from '../../Store/modules/MainStore'
 
 class Signin extends Component {
     constructor(props) {
@@ -14,7 +12,7 @@ class Signin extends Component {
           status_message: "",
         };
     }
-
+    
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value,
@@ -23,8 +21,6 @@ class Signin extends Component {
 
     btnlogin = () => {
         const {id, password} = this.state;
-        const { login } = this.props;
-        login(id);
         if(id === ''){
             if(password !== ''){
                 this.setState({
@@ -43,28 +39,27 @@ class Signin extends Component {
         }
         else {
             fetch('api/login?id=' + id + '&password=' + password)
-            .then(res => res.json())
-            .then(data => this.setState({
-                status_id: "",
-                status_pw: "",
-                status: data.status,
-                status_message: data.status_message,
-            }));
+            .then(data => {
+                    this.setState(
+                        {
+                            status_id: "",
+                            status_pw: "",
+                            status: data.status,
+                            status_message: data.status_message,
+                        }
+                    )
+                    if(data.status){
+                        sessionStorage.setItem('user_id',id);
+                        document.location.href = '/';
+                    }
+                }
+            )
         }
     }
 
     render() {
-        const {status_id, status_pw, status_message,status} = this.state;
-        if(status){
-            return(
-                <div className="outer">
-                    <div className="signin">
-                        당신은 이미 로그인
-                    </div>
-                </div>
-            );
-        }
-        else{
+        const {status_id, status_pw, status_message, status} = this.state;
+        if(sessionStorage.getItem('user_id') === null){
             return (
                 <div className="outer">
                     <div className="signin">
@@ -80,18 +75,17 @@ class Signin extends Component {
                 </div>
             );
         }
+        else{
+            return(
+                <div className="outer">
+                    <div className="signin">
+                        당신은 이미 로그인
+                    </div>
+                </div>
+            );
+        }
         
     }
 }
 
-const mapStateToProps = (state) => (
-    {
-        id: state.mainstore.id,
-    }
-)
-
-const mapDispatchToProps = (dispatch) => ({
-    login: id => dispatch(loginUser(id)),
-})
-
-export default connect(mapStateToProps,mapDispatchToProps)(Signin);
+export default Signin;

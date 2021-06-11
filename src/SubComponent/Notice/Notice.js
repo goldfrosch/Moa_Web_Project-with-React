@@ -14,7 +14,7 @@ import Loading from '../../MainComponent/loading';
 const styles = theme => ({
     root: {
         width: "85%",
-        marginTop: theme.spacing.unit * 3,
+        marginTop: "5%",
         overflowX: "auto",
         margin: '0 7.5%',
     },
@@ -47,7 +47,9 @@ class Notice extends Component{
     //비동기적으로 API 요청 기능을 수행하기 위한 async - await 구문
     componentDidMount() {
         this.callApi()
-        .then(res => this.setState({notice_list: res}))
+        .then(res => {
+            this.setState({notice_list: res})
+        })
         .catch(err => console.log(err));
     }
     

@@ -75,7 +75,7 @@ node server.js
 
 ### How to save
 소스제어에서 변경 마스터 이름 작성
-git push --set-upstream origin master
+git push -u origin +master
 
 ### How to Install Server
 npm install nodemon
