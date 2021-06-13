@@ -30,7 +30,6 @@
 }
 /* header style*/
 .App-header {
-  text-align: center;  
   height: 10vh;
   display: flex;
   align-items: center;
@@ -44,17 +43,20 @@
   float: left;
 }
 .App-header_list {
-  min-height: 1vh;
+  text-align: center;
+  min-height: 2vh;
   margin-left: 2%;
-  width: 85%;
+  width: 80%;
   display: flex;
   font-size: calc(4px + 1vmin);
   float: left;
 }
 .App-header-sign {
-  position: absolute;
-  left: 85%;
-  font-size: calc(8px + 1vmin);
+  min-height: 2vh;
+  width: 15%;
+  text-align: right;
+  display: flex;
+  font-size: calc(4px + 1vmin);
 }
 .App-header-signin {
   float:left;
@@ -64,8 +66,17 @@
   float: left;
   padding-right: 10px;
 }
+.App-header-nick {
+  color: #474747;
+  float: left;
+  padding-right: 10px;
+  white-space: nowrap;
+}
 .App-header-signout {
   color: #474747;
+  float: left;
+  padding-right: 10px;
+  white-space: nowrap;
 }
 
 .App-header-signout:hover {

@@ -9,12 +9,13 @@ import './SubComponent/Sign/signup.css';
 import './SubComponent/Notice/Notice.css';
 import './SubComponent/CookieClicker/Cookie.css';
 
-import { MenuNotice, Home, Second, Third } from './App.js'
+import { MenuNotice, Home, Third } from './App.js'
 import Header from './MainComponent/Header.js'
 import Footer from './MainComponent/Footer.js'
 import Signup from './SubComponent/Sign/signup';
 import Signin from './SubComponent/Sign/signin';
 import Notice_Write from './SubComponent/Notice/Notice_write';
+import CookieClicker from './SubComponent/CookieClicker/clicker';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,7 +24,7 @@ ReactDOM.render(
         <hr width="98%" />
         <Route exact path="/" component={Home} />
         <Route path="/notice" component={MenuNotice} />
-        <Route path="/second" component={Second} />
+        <Route path="/cookiecliker" component={CookieClicker} />
         <Route path="/third" component={Third} />
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />

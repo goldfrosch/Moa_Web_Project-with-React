@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Mainpage from './MainComponent/Mainpage.js'
-import CookieClicker from './SubComponent/CookieClicker/clicker.js'
 import Notice from './SubComponent/Notice/Notice.js'
 
 export class Home extends Component {
@@ -16,16 +15,6 @@ export class MenuNotice extends Component {
   render() {
     return (
       <Notice />
-    )
-  }
-}
-
-export class Second extends Component {
-  render() {
-    return (
-      <div>
-          <CookieClicker />
-      </div>
     )
   }
 }

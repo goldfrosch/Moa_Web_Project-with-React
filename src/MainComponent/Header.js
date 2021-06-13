@@ -10,7 +10,7 @@ class Hovermenu extends Component{
                       새소식
                       <ul className="menu1_s submenu">
                         <li><Link to={'/notice'}>공지사항</Link></li>
-                        <li><Link to={'/second'}>업데이트</Link></li>
+                        <li>업데이트</li>
                         <li><Link to={'/third'}>이벤트</Link></li>
                       </ul>   
                   </li>
@@ -33,7 +33,7 @@ class Hovermenu extends Component{
                   <li className="testMenu">
                       테스트
                       <ul className="testMenu_s submenu">
-                        <li>메뉴 4-1</li>
+                        <li><Link to={'/cookiecliker'}>Cookie Clicker</Link></li>
                         <li>메뉴 4-2</li>
                         <li>메뉴 4-3</li>
                       </ul>   
@@ -60,7 +60,7 @@ class Header extends Component {
       islogin: false,
     };
   }
-
+  
   render(){
     return (
       <header className="App-header">
@@ -72,7 +72,9 @@ class Header extends Component {
         <div className="App-header_list">
           <Hovermenu />
         </div>
-        {sessionStorage.getItem('user_id') !== null ? <LogoutForm /> : <LoginForm />}
+        <div className="App-header-sign">
+          {sessionStorage.getItem('user_id') !== null ? <LogoutForm /> : <LoginForm />}
+        </div>
       </header>
     );
   }
@@ -81,7 +83,7 @@ class Header extends Component {
 class LoginForm extends Component {
   render(){
     return(
-      <div className="App-header-sign">
+      <div>
         <div className="App-header-signup">
           <Link to={'/signup'}>
             Sign Up
@@ -103,6 +105,7 @@ class LogoutForm extends Component {
     this.state = {
       islogin: false,
       userinfo: '',
+      nickname: '',
     };
   }
 
@@ -111,30 +114,33 @@ class LogoutForm extends Component {
     document.location.href = '/';
   }
 
-  // componentDidMount() {
-  //   this.callApi()
-  //   .then(res => this.setState({userinfo: res}))
-  //   .catch(err => console.log(err));
-  // }
+  componentDidMount() {
+    this.callApi()
+    .then(res => this.setState(
+      {
+        nickname: res[0].nickname,
+        userinfo: res,
+      }
+    ))
+    .catch(err => console.log(err));
+  }
 
-  // callApi = async () => {
-  //   const id = sessionStorage.getItem('user_id');
-  //   const response = await fetch('/api/userinfo?id=' + id);
-  //   const body = await response.json();
-  //   return body;
-  // }
+  callApi = async () => {
+    const id = sessionStorage.getItem('user_id');
+    const response = await fetch('/api/userinfo?id=' + id);
+    const body = await response.json();
+    return body;
+  }
 
   render(){
-    console.log(this.state.userinfo);
-    //var image_link = "https://mc-heads.net/avatar/";
     return(
-      <div className="App-header-sign">
-        <p>님 환영합니다</p>
+      <div>
         <div className="App-header-signup">
+            <p className="App-header-nick">{this.state.nickname}</p>
+            <p className="App-header-nick">|</p>
             <p className="App-header-signout">Info</p>
-        </div>
-        <div className="App-header-signin">
-            <p onClick={this.logout} className="App-header-signout">Sign Out</p>
+            <p className="App-header-nick">|</p>
+            <p className="App-header-signout" onClick={this.logout}>Sign Out</p>
         </div>
       </div>
     )

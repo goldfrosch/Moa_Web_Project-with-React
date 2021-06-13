@@ -1,6 +1,5 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState , useEffect } from 'react';
 import useInterval from './useInterval';
-// import useAxios from '../../useAxois';
 
 const CheatInput = (init, v) => {
     const [value, setValue] = useState(init);
@@ -13,12 +12,32 @@ const CheatInput = (init, v) => {
     return { value,onChange };
 }
 
+//const axios = require('axios');
+
 function CookieClicker() {
+    useEffect(() => {
+        console.log('컴포넌트가 화면에 나타남');
+    }, []);
     
     const [bonusClickCookie,setbonusClickCookie] = useState(1);
     const [bonusTimeCookie,setbonusTimeCookie] = useState(1);
     const [bonusTime,setbonusTime] = useState(10000);
     const [cookie,setCookie] = useState(0);
+
+    // axios.get('/api/cookie/save', {
+    //     params:{
+    //         id: sessionStorage.getItem('user_id'),
+    //         cookie: cookie,
+    //         bt: bonusTime,
+    //         btc: bonusTimeCookie,
+    //         bcc: bonusClickCookie,
+    //     }
+    // })
+    // .then(function (res) {
+    // })
+    // .catch(function (error) {
+    //     console.log(error);
+    // })
 
     const buyItem_bonuscookie = (e) => {
         if(cookie - e.target.value < 0){

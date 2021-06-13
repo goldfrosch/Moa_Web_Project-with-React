@@ -1,16 +1,5 @@
-import React, { Component,useState } from 'react';
+import React, { useState } from 'react';
 
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
-
-const styles = theme => ({
-    root: {
-        width: "85%",
-        marginTop: theme.spacing.unit * 3,
-        overflowX: "auto",
-        margin: '0 7.5%',
-    }
-});
 //useInput의 공식같은 느낌
 const useInput = (i,v) => {
     const [value,setValue] = useState(i);
@@ -29,49 +18,50 @@ const useInput = (i,v) => {
     return { value,onChange };
 }
 
-const NoticeInput = () => {
-    const keylimit = (value) => value.length <= 32;
-    const name = useInput("", keylimit);
-    return (
-        <div>
-            <input name="title" className="Notice_Title" {...name}/>
-        </div>
-    )
-}
+function NoticeWrite(){
+    const titlelimit = (value) => value.length <= 32;
+    const name = useInput("", titlelimit);
 
-class Notice_Write extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            title: "",
-            content: "",
+    const contextlimit = (value) => value.length <= 2000;
+    const context = useInput("",contextlimit)
+
+    const noticeAccept = () => {
+        if(name.value.length == 0){
+            alert("글의 제목을 입력해주세요");
+        }
+        else if(context.value.length == 0){
+            alert("글의 내용을 입력해주세요");
+        }
+        else {
+            fetch('api/notice-upload?title=' + name.value + '&content=' + context.value + '&id=' + sessionStorage.getItem('user_id'))
+            .then(document.location.href = '/notice')
+            .catch(error => console.error('Error:', error))
         }
     }
-
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-    };
     
-    render(){
-        const { classes } = this.props;
+    if(sessionStorage.getItem('user_id') === null){
+        document.location.href="/signin"
+    }
+
+    else{
         return(
-            <Paper className={classes.root}>
+            <div>
                 <div>
-                    글 제목:<br />
-                    <NoticeInput />
+                    글 제목: <br />
+                    <input name="title" className="Notice_Title" {...name}/>
                 </div>
                 <div>
                     <br />글 내용:<br />
-                   <textarea name="content" className="Notice_Textarea" onChange={this.handleChange}/> 
+                    <textarea name="content" className="Notice_Textarea" {...context}/><br />
+                    글씨 제한: {context.value.length} / 2000
                 </div>
                 <div>
-                    <button>작성 완료</button>
+                    <button onClick={noticeAccept}>작성 완료</button>
                 </div>
-            </Paper>
+            </div>
         )
     }
+    
 }
 
-export default withStyles(styles)(Notice_Write)
+export default NoticeWrite

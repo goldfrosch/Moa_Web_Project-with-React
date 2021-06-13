@@ -96,4 +96,56 @@ router.get('/registercheck_id', function (req, res) {
         }
     });
 });
+
+router.get('/cookie/get'), function(req,res) {
+    const id = req.query.id;
+    let sql = `select * from cookie where id = '${id}'`;
+
+    db.query(sql,function(err,rows){
+        if(err){
+            console.log("문제발생");
+        }
+        else if (!rows.length) {
+            sql = `insert into cookie(id) values ('${id}')`;
+            db.query(sql,function(err,rows){
+                if(err) {
+                    console.log("문제발생");
+                }
+                else{
+                    console.log("첫입장으로 인한 데이터 추가");
+                }
+            });
+        }
+    })
+}
+
+router.get('/cookie/save', function(req,res) {
+    const id = req.query.id;
+    const cookie = req.query.cookie;
+    const bt = req.query.bt;
+    const btc = req.query.btc;
+    const bcc = req.query.bcc;
+
+    let sql = `update cookie set cookie = '${cookie}',bonustime = '${bt}',bonustimecookie = '${btc}',clickbonuscookie = '${bcc}' where id = '${id}'`;
+
+    db.query(sql, function(err,rows){
+        if(err){
+            console.log("문제발생");
+        }
+    });
+})
+
+router.get('/notice-upload', function(req,res){
+    const title = req.query.title;
+    const content = req.query.content;
+    const id = req.query.id;
+
+    sql = `insert into noticedb (title,uuid,nickname,content) values('${title}',(select uuid from playerdb where id = '${id}'),(select nickname from playerdb where id = '${id}'),'${content}')`;
+
+    db.query(sql, function(err,rows){
+        if(err){
+            console.log("문제 발생");
+        }
+    })
+})
 module.exports = router;
