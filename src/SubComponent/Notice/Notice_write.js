@@ -26,10 +26,10 @@ function NoticeWrite(){
     const context = useInput("",contextlimit)
 
     const noticeAccept = () => {
-        if(name.value.length == 0){
+        if(name.value.length === 0){
             alert("글의 제목을 입력해주세요");
         }
-        else if(context.value.length == 0){
+        else if(context.value.length === 0){
             alert("글의 내용을 입력해주세요");
         }
         else {
@@ -42,7 +42,6 @@ function NoticeWrite(){
     if(sessionStorage.getItem('user_id') === null){
         document.location.href="/signin"
     }
-
     else{
         return(
             <div>

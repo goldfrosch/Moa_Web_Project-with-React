@@ -16,6 +16,7 @@ import Signup from './SubComponent/Sign/signup';
 import Signin from './SubComponent/Sign/signin';
 import Notice_Write from './SubComponent/Notice/Notice_write';
 import CookieClicker from './SubComponent/CookieClicker/clicker';
+import NoticeRead from './SubComponent/Notice/Notice_info';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
         <Route path="/Noticewrite" component={Notice_Write} />
+        <Route path="/notice_info/:no" component={NoticeRead} />
         <hr width="98%" />
         <Footer />
     </Router>

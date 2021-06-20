@@ -28,7 +28,7 @@ class Noticelist extends Component{
         return(
             <TableRow>
                 <TableCell align="center" style={{ width: 100 }}>{this.props.id}</TableCell>
-                <TableCell align="center" style={{ width: 800 }}>{this.props.title}</TableCell>
+                <TableCell align="center" style={{ width: 800 }}><Link to ={`/notice_info/${this.props.id}`}>{this.props.title}</Link></TableCell>
                 <TableCell align="center" style={{ width: 300 }}><img src={this.props.uuid} width='20vh' alt="프로필사진"/> ({this.props.nickname})</TableCell>
                 <TableCell align="center" style={{ width: 400 }}>{this.props.time}</TableCell>
                 <TableCell align="center" style={{ width: 80 }}>{this.props.views}</TableCell>
@@ -38,10 +38,12 @@ class Noticelist extends Component{
 }
 
 class Notice extends Component{
-    
-    state = {
-        notice_list: '',
-        completed: 0
+    constructor(props) {
+        super(props);
+        this.state = {
+            notice_list: '',
+            user_perm: 0,
+        };
     }
 
     //비동기적으로 API 요청 기능을 수행하기 위한 async - await 구문
@@ -49,6 +51,16 @@ class Notice extends Component{
         this.callApi()
         .then(res => {
             this.setState({notice_list: res})
+        })
+        .catch(err => console.log(err));
+
+        this.resPerm()
+        .then(res => {
+            this.setState(
+                {
+                    user_perm: res[0].permission_number
+                }
+            )
         })
         .catch(err => console.log(err));
     }
@@ -59,9 +71,16 @@ class Notice extends Component{
         return body;
     }
 
+    resPerm = async () => {
+        const response = await fetch('/api/perm_check?&id=' + sessionStorage.getItem('user_id'));
+        const body = await response.json();
+        return body;
+    }
+
     render(){
         //style 적용 classes
         const { classes } = this.props;
+        const { user_perm } = this.state
         var image_link = "https://mc-heads.net/avatar/";
         return(
             <div className="Notice">
@@ -91,9 +110,9 @@ class Notice extends Component{
                     </Table>
                 </Paper>
                 <div className="Notice_Button">
-                    <Link to={'/Noticewrite'}>
+                    {(user_perm > 1) ? <Link to={'/Noticewrite'}>
                         <img src="/image/Logo.png" alt="" className="Notice_Button"/>
-                    </Link>
+                    </Link> : ""}
                 </div>
             </div>
         )

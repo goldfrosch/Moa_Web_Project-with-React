@@ -2,14 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/Database');
 
-router.get('/', (req, res) => {
-    res.json({username:'bryan~~~'})
-});
-
-router.get('/group', (req, res)=> {
-    res.json({username:'dev group. bryan'})
-});
-
 router.get('/userinfo', (req, res) => {
     const id = req.query.id;
     let sql = `select * from playerdb where id = ('${id}')`;
@@ -20,19 +12,10 @@ router.get('/userinfo', (req, res) => {
     )
 });
 
-router.get('/notice_list', (req, res) => {
-    db.query(
-      'SELECT id,title,uuid,nickname,views,if(DATE(writetime) >= DATE(now()),DATE_FORMAT(writetime, "%H:%i"),DATE_FORMAT(writetime, "%y.%m.%d")) as writetime from noticedb order by id desc',
-      (err, rows, fields) => {
-        res.send(rows);
-      } 
-    )
-});
-
 router.get('/login', function (req, res) {
     const id = req.query.id;
     const pw = req.query.password;
-    let sql = `select id,password from playerdb where id = ('${id}')`;
+    let sql = `select id,password from playerdb where id =  ('${id}')`;
   
     db.query(sql, function (err, rows) {
         if(err){
@@ -135,6 +118,20 @@ router.get('/cookie/save', function(req,res) {
     });
 })
 
+router.get('/perm_check', (req,res) => {
+    const id = req.query.id;
+    let sql = `select permission_number from permission perm join playerdb db on perm.permission = db.permission where db.id = '${id}'`
+
+    db.query(sql, function(err,rows){
+        if(err){
+            console.log("문제 발생");
+        }
+        else{
+            res.send(rows);
+        }
+    })
+})
+
 router.get('/notice-upload', function(req,res){
     const title = req.query.title;
     const content = req.query.content;
@@ -148,4 +145,29 @@ router.get('/notice-upload', function(req,res){
         }
     })
 })
+
+router.get('/notice_list', (req, res) => {
+    db.query(
+      'SELECT id,title,uuid,nickname,views,if(DATE(writetime) >= DATE(now()),DATE_FORMAT(writetime, "%H:%i"),DATE_FORMAT(writetime, "%y.%m.%d")) as writetime from noticedb order by id desc',
+      (err, rows, fields) => {
+        res.send(rows);
+      } 
+    )
+});
+
+router.get('/notice-info', (req, res) => {
+    const id = req.query.id;
+    let sql = `SELECT title,uuid,nickname,content,views,if(DATE(writetime) >= DATE(now()),DATE_FORMAT(writetime, "%H:%i"),DATE_FORMAT(writetime, "%y.%m.%d")) as writetime from noticedb where id = '${id}`;
+    
+    db.query(sql, function(err,rows){
+        if(err){
+            console.log("문제 발생");
+            console.log(id);
+        }
+        else {
+            res.send(rows);
+            console.log(id);
+        }
+    })
+});
 module.exports = router;

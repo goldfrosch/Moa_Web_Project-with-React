@@ -58,7 +58,7 @@ class Signin extends Component {
     }
 
     render() {
-        const {status_id, status_pw, status_message, status} = this.state;
+        const {status_id, status_pw, status_message} = this.state;
         if(sessionStorage.getItem('user_id') === null){
             return (
                 <div className="outer">
@@ -70,7 +70,6 @@ class Signin extends Component {
                     <p className="caution">{status_pw}</p>
                     <button onClick={this.btnlogin}>로그인</button>
                     <p className="caution">{status_message}</p>
-                    <p className="caution">{status}</p>
                     </div>
                 </div>
             );
