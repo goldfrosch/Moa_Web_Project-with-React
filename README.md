@@ -1,6 +1,4 @@
 # Moa Server Website
-해당 웹 사이트는 포트폴리오 겸 게임 서버에 사용할
-웹 프로젝트입니다. 허접한 소스 가져가실거면 가져가세요
 (폐기된 프로젝트 / 사유: typescript로 마이그레이션, 백엔드 언어: Java Spring, 리메이크)
 
 ## Available Scripts
